@@ -31,7 +31,7 @@ export function HomePage() {
           <>
             <PostList articles={articles} />
             <Pagination
-              style={{ marginTop: '30px' }}
+              style={{ marginTop: '30px auto' }}
               current={Math.floor(offset / limit) + 1}
               pageSize={limit}
               total={articleCount}
