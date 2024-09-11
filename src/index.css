@@ -1,0 +1,17 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
+a:active,
+a:hover, 
+a {
+  text-decoration: none;
+  color:#1890FF;
+}
+body{
+  background-color: #EBEEF3;
+  margin: 0 auto;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+}

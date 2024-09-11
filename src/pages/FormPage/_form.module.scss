@@ -1,0 +1,27 @@
+.userForm{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    padding-right: 32px;
+    padding-left:  32px;
+    font-size: 14px;
+    .userLabel{
+        margin-top: 12px;
+        display: flex;
+        flex-direction: column;
+        .userInput{
+            margin-top: 5px;
+            border-radius: 1px;
+            border: 1px solid #8c8c8c62;
+            padding-left: 10px;
+            width: 320px;
+            height: 40px;
+        }
+    }
+    .userButton{
+        margin-top: 20px;
+        width: 330px;
+        height: 40px;
+    }
+    
+}

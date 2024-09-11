@@ -1,0 +1,64 @@
+.createForm{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 874px;
+    max-width: 874px;
+    font-size: 14px;
+    .createLabel{
+        margin-top: 12px;
+        display: flex;
+        flex-direction: column;
+        .createInput{
+            margin-top: 5px;
+            border-radius: 1px;
+            border: 1px solid #8c8c8c62;
+            padding-left: 10px;
+            height: 40px;
+        }
+        .postBody{
+            border: 1px solid #8c8c8c62;
+            height: 168px;
+            resize: none;
+            margin-top: 5px;
+            border-radius: 1px;
+            padding-left: 10px;
+            padding-top: 10px;
+        }
+        .createTagInput{
+            width: 300px;
+            margin-top: 5px;
+            border-radius: 1px;
+            border: 1px solid #8c8c8c62;
+            padding-left: 10px;
+            height: 40px;
+        }
+        .tagInputWrapper{
+            margin-top: 5px;
+            &:last-child{
+                margin-bottom: 30px;
+            }
+        }
+        .deleteTagButton{
+            margin-left: 10px;
+            padding-left: 15px;
+            padding-right: 15px;
+            height: 40px;
+        }
+        .addTagButton{
+            height: 40px;
+            margin-left: 10px;
+            padding-left: 15px;
+            padding-right: 15px;
+            color:#1677ff;
+            background: transparent;
+            border: 1px solid #1677ff;
+        }
+    }
+    .createButton{
+        margin-bottom: 20px;
+        width: 330px;
+        height: 40px;
+    }
+    
+}
