@@ -2,7 +2,8 @@ import { Pagination, Spin } from 'antd';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { fetchGloballyArticles, setOffset, setLimit } from '../../store/arcticles';
+import { setOffset, setLimit } from '../../store/arcticles';
+import { fetchGloballyArticles } from '../../store/api';
 import PostList from '../../components/PostList/PostList';
 
 export function HomePage() {
@@ -31,7 +32,7 @@ export function HomePage() {
           <>
             <PostList articles={articles} />
             <Pagination
-              style={{ marginTop: '30px auto' }}
+              style={{ margin: '30px auto' }}
               current={Math.floor(offset / limit) + 1}
               pageSize={limit}
               total={articleCount}

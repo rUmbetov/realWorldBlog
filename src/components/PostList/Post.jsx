@@ -2,7 +2,7 @@ import { Popconfirm, Button, Tag } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { deleteArticle } from '../../store/arcticles';
+import { deleteArticle } from '../../store/api';
 import { isEdit, formatDate } from '../../utils/postUtils';
 import logo from '../../assets/user_logo.png';
 

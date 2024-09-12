@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 import { useEffect } from 'react';
 
-import { userAuth } from '../../../store/authSlice';
+import { userAuth } from '../../../store/api';
 import FormTitle from '../FormTitle';
 import styles from '../_editPage.module.scss';
 

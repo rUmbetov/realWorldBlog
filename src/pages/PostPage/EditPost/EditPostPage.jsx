@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { updateArticle } from '../../../store/arcticles';
+import { updateArticle } from '../../../store/api';
 import FormTitle from '../../FormPage/FormTitle';
 import CreatePostForm from '../PostForm';
 import style from '../CreatePost/_createPage.module.scss';

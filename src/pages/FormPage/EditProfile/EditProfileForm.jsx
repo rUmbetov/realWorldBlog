@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { userUpdate } from '../../../store/authSlice';
+import { userUpdate } from '../../../store/api';
 import ValidError from '../../../components/ValidError/ValidError';
 import styles from '../_form.module.scss';
 const EditProfileForm = () => {

@@ -2,7 +2,7 @@ import { Button } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 
-import { fetchNewUser } from '../../../store/authSlice';
+import { fetchNewUser } from '../../../store/api';
 import ValidError from '../../../components/ValidError/ValidError';
 import styles from '../_form.module.scss';
 
