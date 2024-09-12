@@ -17,8 +17,15 @@ const FullpostPage = () => {
     const fetchArticle = async (slug) => {
       //грузим статью по запросу slug из роутера
       try {
+        const token = localStorage.getItem('token');
         setLoading(true);
-        const response = await fetch(`https://blog.kata.academy/api/articles/${slug}`);
+        const response = await fetch(`https://blog.kata.academy/api/articles/${slug}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Token ${token}`,
+          },
+        });
         const data = await response.json();
         if (response.ok) {
           setArticle(data.article);
