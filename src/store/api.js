@@ -1,23 +1,36 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+
+const apiFetch = async (url, options = {}) => {
+  const token = localStorage.getItem('token');
+  const headers = {
+    ...options.headers,
+    Authorization: token ? `Token ${token}` : undefined,
+  };
+
+  try {
+    const response = await fetch(url, { ...options, headers });
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.errors || 'Произошла ошибка');
+    }
+    return data;
+  } catch (error) {
+    throw new Error(error.message || 'Произошла ошибка');
+  }
+};
+
 export const fetchGloballyArticles = createAsyncThunk(
   'article/fetchGloballyArticles',
   async ({ offset = 0, limit = 10 }, { rejectWithValue }) => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/articles?offset=${offset}&limit=${limit}`);
-      const data = await response.json();
-      if (response.ok) {
-        console.log(data);
-        return data;
-      } else {
-        return rejectWithValue(data);
-      }
+      return await apiFetch(`${import.meta.env.VITE_API_URL}/articles?offset=${offset}&limit=${limit}`);
     } catch (err) {
       return rejectWithValue(err.message);
     }
   }
 );
+
 export const createArticle = createAsyncThunk('article/createArticle', async (dataArticle, { rejectWithValue }) => {
-  const token = localStorage.getItem('token');
   try {
     const articleData = {
       title: dataArticle.title,
@@ -25,26 +38,19 @@ export const createArticle = createAsyncThunk('article/createArticle', async (da
       body: dataArticle.body,
       ...(dataArticle.tags && dataArticle.tags[0] && { tagList: dataArticle.tags }),
     };
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/articles`, {
+    return await apiFetch(`${import.meta.env.VITE_API_URL}/articles`, {
       method: 'POST',
-      headers: {
-        'Content-type': 'application/json',
-        Authorization: `Token ${token}`,
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ article: articleData }),
     });
-    const data = await response.json();
-    if (!response.ok) {
-      rejectWithValue(data.err);
-    }
   } catch (err) {
-    rejectWithValue(err.message);
+    return rejectWithValue(err.message);
   }
 });
+
 export const updateArticle = createAsyncThunk(
   'article/updateArticle',
   async ({ title, description, body, tagList, slug }, { rejectWithValue }) => {
-    const token = localStorage.getItem('token');
     try {
       const articleData = {
         title,
@@ -52,49 +58,32 @@ export const updateArticle = createAsyncThunk(
         body,
         ...(tagList && tagList.length > 0 && { tagList }),
       };
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/articles/${slug}`, {
+      return await apiFetch(`${import.meta.env.VITE_API_URL}/articles/${slug}`, {
         method: 'PUT',
-        headers: {
-          'Content-type': 'application/json',
-          Authorization: `Token ${token}`,
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ article: articleData }),
       });
-      const data = await response.json();
-      if (!response.ok) {
-        rejectWithValue(data.err);
-      }
     } catch (err) {
-      rejectWithValue(err.message);
+      return rejectWithValue(err.message);
     }
   }
 );
 
 export const deleteArticle = createAsyncThunk('article/deleteArticle', async (slug, { rejectWithValue }) => {
-  const token = localStorage.getItem('token');
   try {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/articles/${slug}`, {
+    return await apiFetch(`${import.meta.env.VITE_API_URL}/articles/${slug}`, {
       method: 'DELETE',
-      headers: {
-        Authorization: `Token ${token}`,
-      },
     });
-    const data = await response.json();
-    if (!response.ok) {
-      rejectWithValue(data.err);
-    }
   } catch (err) {
-    rejectWithValue(err.message);
+    return rejectWithValue(err.message);
   }
 });
 
 export const fetchNewUser = createAsyncThunk('newUser/fetchNewUser', async (dataNewUser, { rejectWithValue }) => {
   try {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/users`, {
+    const data = await apiFetch(`${import.meta.env.VITE_API_URL}/users`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         user: {
           username: dataNewUser.username,
@@ -103,26 +92,20 @@ export const fetchNewUser = createAsyncThunk('newUser/fetchNewUser', async (data
         },
       }),
     });
-    const data = await response.json();
-    if (response.ok) {
-      localStorage.setItem('isAuth', true);
-      localStorage.setItem('user', JSON.stringify(data.user));
-      localStorage.setItem('token', data.user.token);
-      return data;
-    } else {
-      return rejectWithValue(data.errors);
-    }
+    localStorage.setItem('isAuth', true);
+    localStorage.setItem('user', JSON.stringify(data.user));
+    localStorage.setItem('token', data.user.token);
+    return data;
   } catch (err) {
     return rejectWithValue(err.message);
   }
 });
+
 export const userAuth = createAsyncThunk('auth/userAuth', async (dataUser, { rejectWithValue }) => {
   try {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/users/login`, {
+    const data = await apiFetch(`${import.meta.env.VITE_API_URL}/users/login`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         user: {
           email: dataUser.email,
@@ -130,28 +113,20 @@ export const userAuth = createAsyncThunk('auth/userAuth', async (dataUser, { rej
         },
       }),
     });
-    const data = await response.json();
-    if (response.ok) {
-      localStorage.setItem('isAuth', true);
-      localStorage.setItem('user', JSON.stringify(data.user));
-      localStorage.setItem('token', data.user.token);
-      return data;
-    } else {
-      return rejectWithValue(data.errors);
-    }
+    localStorage.setItem('isAuth', true);
+    localStorage.setItem('user', JSON.stringify(data.user));
+    localStorage.setItem('token', data.user.token);
+    return data;
   } catch (err) {
     return rejectWithValue(err.message);
   }
 });
+
 export const userUpdate = createAsyncThunk('update/userUpdate', async (dataUpdateUser, { rejectWithValue }) => {
   try {
-    const token = localStorage.getItem('token');
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/user`, {
+    const data = await apiFetch(`${import.meta.env.VITE_API_URL}/user`, {
       method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Token ${token}`,
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         user: {
           email: dataUpdateUser.email,
@@ -161,15 +136,10 @@ export const userUpdate = createAsyncThunk('update/userUpdate', async (dataUpdat
         },
       }),
     });
-    const data = await response.json();
-    if (response.ok) {
-      localStorage.setItem('user', JSON.stringify(data.user));
-      localStorage.setItem('token', data.user.token);
-      return data;
-    } else {
-      return rejectWithValue(data.err);
-    }
+    localStorage.setItem('user', JSON.stringify(data.user));
+    localStorage.setItem('token', data.user.token);
+    return data;
   } catch (err) {
-    rejectWithValue(err.message);
+    return rejectWithValue(err.message);
   }
 });

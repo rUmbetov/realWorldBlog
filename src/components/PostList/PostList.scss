@@ -22,6 +22,10 @@
     .left {
       display: flex;
       flex-direction: column;
+      .tit{
+        display: flex;
+        align-items: center;
+      }
       .post__content {
         max-width: 600px;
         font-size: 12px;
