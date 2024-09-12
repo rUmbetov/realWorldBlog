@@ -40,6 +40,7 @@ const SignUpForm = () => {
             },
           })}
         ></input>
+        {errors.username && <ValidError message={errors.username.message} />}
         {apiError && apiError.username && <ValidError message="Уже занято" />}
       </label>
       <label className={styles.userLabel}>
