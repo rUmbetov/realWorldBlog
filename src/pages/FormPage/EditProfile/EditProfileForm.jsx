@@ -79,7 +79,17 @@ const EditProfileForm = () => {
       </label>
       <label className={styles.userLabel}>
         Avatar image (url)
-        <input className={styles.userInput} placeholder="Avatar image (url)" {...register('image', {})} />
+        <input
+          className={styles.userInput}
+          placeholder="Avatar image (url)"
+          {...register('image', {
+            pattern: {
+              value: /^(https?:\/\/[^\s/$.?#].[^\s]*)$/,
+              message: 'Введите корректный URL',
+            },
+          })}
+        />
+        {errors.image && <ValidError message={errors.image.message} />}
       </label>
       <Button htmlType="submit" type="primary" className={styles.userButton} style={{ marginBottom: '50px' }}>
         Save

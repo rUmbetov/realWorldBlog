@@ -70,13 +70,11 @@ const CreatePostForm = ({ tags, register, handleSubmit, handleSend, errors, setT
                 Delete
               </Button>
             )}
-            {index === tags.length - 1 && (
-              <Button type="primary" onClick={handleAddTag} className={styles.addTagButton}>
-                Add Tag
-              </Button>
-            )}
           </div>
         ))}
+        <Button type="primary" onClick={handleAddTag} className={styles.addTagButton}>
+          Add Tag
+        </Button>
       </label>
 
       <Button type="primary" htmlType="submit" className={styles.createButton}>

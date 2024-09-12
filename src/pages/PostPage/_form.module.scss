@@ -47,12 +47,14 @@
         }
         .addTagButton{
             height: 40px;
-            margin-left: 10px;
+            margin-top: 10px;
+            margin-bottom: 10px;
             padding-left: 15px;
             padding-right: 15px;
-            color:#1677ff;
+            color: #1677ff;
             background: transparent;
             border: 1px solid #1677ff;
+            width: 90px;
         }
     }
     .createButton{
