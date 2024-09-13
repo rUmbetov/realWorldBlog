@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 import { useEffect } from 'react';
 
+import { clearError } from '../../../store/authSlice';
 import { userAuth } from '../../../store/api';
 import FormTitle from '../FormTitle';
 import styles from '../_editPage.module.scss';
@@ -18,6 +19,9 @@ const SignInPage = () => {
       navigate('/');
     }
   }, [navigate, isAuth]);
+  useEffect(() => {
+    dispatch(clearError());
+  }, []);
 
   const handleLogin = (userData) => {
     dispatch(userAuth(userData));

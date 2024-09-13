@@ -20,6 +20,19 @@ const authSlice = createSlice({
       localStorage.removeItem('user');
       localStorage.removeItem('isAuth');
     },
+    clearError: (state) => {
+      state.error = null;
+    },
+    clearUsernameError: (state) => {
+      if (state.error && state.error.username) {
+        delete state.error.username;
+      }
+    },
+    clearEmailError: (state) => {
+      if (state.error && state.error.email) {
+        delete state.error.email;
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -66,5 +79,5 @@ const authSlice = createSlice({
       });
   },
 });
-export const { logout } = authSlice.actions;
+export const { logout, clearError, clearUsernameError, clearEmailError } = authSlice.actions;
 export default authSlice.reducer;

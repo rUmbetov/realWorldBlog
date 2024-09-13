@@ -6,13 +6,13 @@ import { Spin, Alert } from 'antd';
 import Post from '../../../components/PostList/Post';
 
 import './FullPostPage.scss';
+import { useSelector } from 'react-redux';
 
 const FullpostPage = () => {
   const [article, setArticle] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { slug } = useParams();
-  const username = JSON.parse(localStorage.getItem('user')).username;
   useEffect(() => {
     const fetchArticle = async (slug) => {
       //грузим статью по запросу slug из роутера
@@ -49,7 +49,7 @@ const FullpostPage = () => {
           <Alert message="Ошибка" description={error} type="error" showIcon />
         ) : (
           <>
-            <Post article={article} color={true} onEdit={true} username={username} />
+            <Post article={article} color={true} onEdit={true} fullpost={true} />
             <div className="content">
               <Markdown>{article.body}</Markdown>
             </div>

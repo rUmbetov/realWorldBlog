@@ -1,7 +1,9 @@
-import { Button } from 'antd';
+import { Button, Checkbox } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
+import { useEffect } from 'react';
 
+import { clearError, clearUsernameError, clearEmailError } from '../../../store/authSlice';
 import { fetchNewUser } from '../../../store/api';
 import ValidError from '../../../components/ValidError/ValidError';
 import styles from '../_form.module.scss';
@@ -14,8 +16,27 @@ const SignUpForm = () => {
     handleSubmit,
     watch,
     formState: { errors },
+    control,
   } = useForm({ mode: 'onChange' });
   const password = watch('password');
+  const username = watch('username');
+  const email = watch('email');
+
+  useEffect(() => {
+    dispatch(clearError());
+  }, []);
+
+  useEffect(() => {
+    if (apiError?.username && username) {
+      dispatch(clearUsernameError());
+    }
+  }, [username, dispatch]);
+
+  useEffect(() => {
+    if (apiError?.email && email) {
+      dispatch(clearEmailError());
+    }
+  }, [email, dispatch]);
 
   const handleCreate = (data) => {
     dispatch(fetchNewUser(data));
@@ -91,6 +112,17 @@ const SignUpForm = () => {
         />
         {errors.repeatPassword && <ValidError message={errors.repeatPassword.message} />}
       </label>
+      <Controller
+        name="agreement"
+        control={control}
+        rules={{ required: 'Вы должны согласиться с условиями' }}
+        render={({ field }) => (
+          <Checkbox {...field} checked={field.value} className={styles.checkbox}>
+            I agree to the processing of my personal information
+          </Checkbox>
+        )}
+      />
+      {errors.agreement && <ValidError message={errors.agreement.message} />}
       <Button htmlType="submit" type="primary" className={styles.userButton} style={{ marginBottom: '50px' }}>
         Create
       </Button>

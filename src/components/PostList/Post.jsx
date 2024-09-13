@@ -8,12 +8,16 @@ import { deleteArticle } from '../../store/api';
 import { isEdit, formatDate } from '../../utils/postUtils';
 import logo from '../../assets/user_logo.png';
 
-const Post = ({ article, color, onEdit, username }) => {
+const Post = ({ article, color, onEdit, fullpost }) => {
   const [favorited, setFavorited] = useState(article.favorited);
   const [favoritedCount, setFavoritedCount] = useState(article.favoritesCount);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isAuth = useSelector((state) => state.auth.isAuth);
+  let username = null;
+  if (isAuth) {
+    username = JSON.parse(localStorage.getItem('user')).username;
+  }
 
   const handleNetworkRequest = (url, method) => {
     const token = localStorage.getItem('token');
@@ -33,7 +37,7 @@ const Post = ({ article, color, onEdit, username }) => {
 
   const confirm = () => {
     dispatch(deleteArticle(article.slug)).then((action) => {
-      if (deleteArticle.fulfilled.match(action)) {
+      if (deleteArticle.rejected.match(action)) {
         navigate('/');
       }
     });
@@ -73,14 +77,18 @@ const Post = ({ article, color, onEdit, username }) => {
       <div className="post__header">
         <div className="left">
           <div className="tit">
-            <Link to={`/articles/${article.slug}`} className="title">
-              {article.title}
-            </Link>
+            {fullpost ? (
+              <div className="title">{article.title}</div>
+            ) : (
+              <Link to={`/articles/${article.slug}`} className="title">
+                {article.title}
+              </Link>
+            )}
             <div>
               {favorited ? (
-                <HeartFilled style={{ color: '#FF0707' }} onClick={handleFavorite} />
+                <Button type="link" icon={<HeartFilled style={{ color: '#FF0707' }} />} onClick={handleFavorite} />
               ) : (
-                <HeartOutlined onClick={handleFavorite} />
+                <Button type="link" icon={<HeartOutlined />} onClick={handleFavorite} />
               )}
               {favoritedCount}
             </div>

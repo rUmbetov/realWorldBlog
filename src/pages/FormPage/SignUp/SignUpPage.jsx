@@ -10,6 +10,7 @@ import SignUpForm from './SignUpForm';
 const SignUpPage = () => {
   const navigate = useNavigate();
   const isAuth = useSelector((state) => state.auth.isAuth);
+  const apiError = useSelector((state) => state.auth.error);
 
   useEffect(() => {
     if (isAuth) {
@@ -20,7 +21,7 @@ const SignUpPage = () => {
   return (
     <div className={styles.userAuth}>
       <FormTitle title="Sign Up" />
-      <SignUpForm />
+      <SignUpForm apiError={apiError} />
     </div>
   );
 };

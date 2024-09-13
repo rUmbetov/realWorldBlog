@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
-import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { createArticle } from '../../../store/api';
@@ -11,6 +11,7 @@ import style from './_createPage.module.scss';
 
 const CreatePostPage = () => {
   const dispatch = useDispatch();
+  const isAuth = useSelector((state) => state.auth.isAuth);
   const navigate = useNavigate();
   const [tags, setTags] = useState(['']);
   const {
@@ -18,6 +19,12 @@ const CreatePostPage = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({ mode: 'onChange' });
+
+  useEffect(() => {
+    if (!isAuth) {
+      navigate('/sign-in');
+    }
+  }, [navigate]);
 
   const handleSend = (data) => {
     dispatch(createArticle({ ...data, tags })).then((action) => {
