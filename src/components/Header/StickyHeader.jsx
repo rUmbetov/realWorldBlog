@@ -4,7 +4,6 @@ import { Button } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { logout } from '../../store/authSlice';
-import logo from '../../assets/user_logo.png';
 
 import './StickyHeader.scss';
 
@@ -31,7 +30,11 @@ const StickyHeader = () => {
                 <Link to="/edit-profile" style={{ color: 'black', display: 'flex', alignItems: 'center', gap: '10px' }}>
                   <div className="name">{user.username}</div>
                   <div className="pic">
-                    <img className="picture" src={user.image ? user.image : logo} alt="User Avatar" />
+                    <img
+                      className="picture"
+                      src={user.image ? user.image : 'https://static.productionready.io/images/smiley-cyrus.jpg'}
+                      alt="User Avatar"
+                    />
                   </div>
                 </Link>
                 <Button onClick={handleLogOut}>Log Out</Button>
