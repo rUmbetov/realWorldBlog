@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 import { createArticle } from '../../../store/api';
 import FormTitle from '../../FormPage/FormTitle';
@@ -22,9 +22,9 @@ const CreatePostPage = () => {
 
   useEffect(() => {
     if (!isAuth) {
-      navigate('/sign-in');
+      Navigate('/sign-in');
     }
-  }, [navigate, isAuth]);
+  }, [isAuth]);
 
   const handleSend = (data) => {
     dispatch(createArticle({ ...data, tags })).then((action) => {
