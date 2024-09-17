@@ -37,7 +37,7 @@ const Post = ({ article, color, onEdit, fullpost }) => {
 
   const confirm = () => {
     dispatch(deleteArticle(article.slug)).then((action) => {
-      if (deleteArticle.rejected.match(action)) {
+      if (deleteArticle.fulfilled.match(action)) {
         navigate('/');
       }
     });

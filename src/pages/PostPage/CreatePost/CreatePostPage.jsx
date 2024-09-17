@@ -24,7 +24,7 @@ const CreatePostPage = () => {
     if (!isAuth) {
       navigate('/sign-in');
     }
-  }, [navigate]);
+  }, [navigate, isAuth]);
 
   const handleSend = (data) => {
     dispatch(createArticle({ ...data, tags })).then((action) => {
