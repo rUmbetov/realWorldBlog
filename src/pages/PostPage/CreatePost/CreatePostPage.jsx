@@ -29,7 +29,6 @@ const CreatePostPage = () => {
   const handleSend = (data) => {
     dispatch(createArticle({ ...data, tags })).then((action) => {
       if (createArticle.fulfilled.match(action)) {
-        //если все гуд то возвращаемся к статье
         navigate('/');
       }
     });
